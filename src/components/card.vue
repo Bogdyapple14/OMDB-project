@@ -1,23 +1,36 @@
 <template>
-  <div class="flex flex-wrap justify-center">
+  <div class="flex flex-wrap justify-center cards">
     <div
-      id="card"
-      class="text-center bg-white border-2 border-red-400 shadow-2xl text-black rounded-lg m-4 px-5 w-80"
+      class="overflow-hidden text-center bg-gray-300 shadow-2xl text-black rounded-lg m-4 w-80"
       v-for="(movieInfo,index) in moviesInfos"
       :key="index"
+      @click="alert(movieInfo.Title)"
     >
-      <p class="text-xl truncate">{{movieInfo.Title}}</p>
-      <p class="text-xl truncate">{{movieInfo.Year}}</p>
+      <img class="w-full h-80" :src="movieInfo.Poster" alt />
+      <div class="cardInfos py-3 px-3 shadow-2xl">
+        <p class="movieTitle text-xl truncate">{{movieInfo.Title}}</p>
+        <p class="text-xl">Released: {{movieInfo.Year}}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";;
+import { mapGetters } from "vuex";
+import tippy from "tippy.js";
 export default {
   computed: {
     ...mapGetters(["moviesTitles", "moviesInfos"])
   }
 };
-
+tippy(".movieTitle", {
+  content: "My tooltip!"
+});
 </script>
+
+
+<style>
+.cards {
+  min-height: 12rem !important;
+}
+</style>

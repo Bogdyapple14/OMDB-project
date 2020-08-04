@@ -13,15 +13,23 @@
     />
     <div id="results" v-if="searched" class="flex text-center flex-col w-full">
       <h1>Total Results: {{totalResults}}</h1>
+      <div id="pagination" class="flex mx-auto ">
+        <button
+          @click="changePage(-1)"
+          v-show="page > 1"
+          class="hover:text-red-400 duration-200 focus:outline-none"
+        >Prev</button>
+        <h1 class="mx-2">/</h1>
+        <button
+          @click="changePage(1)"
+          v-show="page < totalResults / 10"
+          class="hover:text-red-400 duration-200 focus:outline-none"
+        >Next</button>
+      </div>
+      <h1>{{page}}</h1>
       <div class="flex flex-wrap justify-center items-center">
         <card></card>
       </div>
-      <div id="pagination" class="flex mx-auto mt-12">
-        <button @click="changePage(-1)" class="hover:text-red-400 duration-200 focus:outline-none">Prev</button>
-        <h1 class="mx-2">/</h1>
-        <button @click="changePage(1)" class="hover:text-red-400 duration-200 focus:outline-none">Next</button>
-      </div>
-      <h1>{{page}}</h1>
     </div>
   </div>
 </template>
@@ -55,9 +63,9 @@ export default {
       this.$store.dispatch("fetchApi");
       this.searched = true;
     },
-    changePage(){
-      this.$store.dispatch("changePage")
-      this.$store.dispatch("fetchApi")
+    changePage(payload) {
+      this.$store.dispatch("changePage", payload);
+      this.$store.dispatch("fetchApi");
     }
   },
   components: {

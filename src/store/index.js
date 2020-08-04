@@ -9,7 +9,6 @@ export default new Vuex.Store({
     totalResults: {
       type: Number
     },
-    moviesTitles: [],
     moviesInfos: [],
     searchedMovie: "",
     page: 1
@@ -55,8 +54,10 @@ export default new Vuex.Store({
         .then(response => {
           commit("SET_TOTALRESULTS", response.data.totalResults);
           commit("SET_MOVIESINFOS", response.data.Search)
-          for (let i = 0; i < response.data.Search.length; i++)
-            commit("SET_MOVIESTITLES", response.data.Search[i].Title)
+          for (let i = 0; i < response.data.Search.length; i++) {
+            if (response.data.Search[i].Poster == "N/A")
+              response.data.Search[i].Poster = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.cdn4.stockunlimited.net%2Fpreview1300%2Fcinema-background-with-movie-objects_1823382.jpg&f=1&nofb=1"
+          }
         });
     },
     changePage({ commit }, payload) {
