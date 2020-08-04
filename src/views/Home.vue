@@ -5,6 +5,7 @@
     style="background-image:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)), url('https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fyesofcorsa.com%2Fwp-content%2Fuploads%2F2017%2F05%2FCinema-Wallpaper-Free.jpg&f=1&nofb=1')"
   >
     <h1 class="text-5xl font-semibold z-10 text-white">About Movies</h1>
+    <router-link to="/details">Details</router-link>
     <input
       type="text"
       placeholder="Movie Name"
@@ -13,7 +14,7 @@
     />
     <div id="results" v-if="searched" class="flex text-center flex-col w-full">
       <h1>Total Results: {{totalResults}}</h1>
-      <div id="pagination" class="flex mx-auto ">
+      <div id="pagination" class="flex mx-auto">
         <button
           @click="changePage(-1)"
           v-show="page > 1"

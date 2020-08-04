@@ -11,17 +11,22 @@ export default new Vuex.Store({
     },
     moviesInfos: [],
     searchedMovie: "",
-    page: 1
+    page: 1,
+    clickedTitle: "",
+    clickedMovieDetails: []
   },
   getters: {
     totalResults: state => {
       return state.totalResults;
     },
-    moviesTitles: state => {
-      return state.moviesTitles
+    clickedTitle: state => {
+      return state.clickedTitle;
     },
     moviesInfos: state => {
       return state.moviesInfos
+    },
+    clickedMovieDetails: state => {
+      return state.clickedMovieDetails
     },
     searchedMovie: state => {
       return state.searchedMovie
@@ -34,11 +39,17 @@ export default new Vuex.Store({
     SET_TOTALRESULTS(state, payload) {
       state.totalResults = payload;
     },
+    SET_CLICKEDTITLE(state, payload) {
+      state.clickedTitle = payload;
+    },
     CHANGE_PAGE(state, payload) {
       state.page += payload;
     },
     SET_MOVIESINFOS(state, payload) {
       state.moviesInfos = payload;
+    },
+    SET_CLICKEDMOVIEDETAILS(state, payload) {
+      state.clickedMovieDetails = payload;
     },
     SET_SEARCHEDMOVIE(state, payload) {
       state.searchedMovie = payload;
@@ -60,8 +71,19 @@ export default new Vuex.Store({
           }
         });
     },
+    fetch({ commit, state }) {
+      axios
+        .get("http://www.omdbapi.com/?t=" + state.clickedTitle + "&apikey=7dbc4f8c")
+        .then(response => {
+          commit("SET_CLICKEDMOVIEDETAILS", response.data)
+          console.log(state.clickedTitle, state.clickedMovieDetails)
+        })
+    },
     changePage({ commit }, payload) {
       commit("CHANGE_PAGE", payload)
+    },
+    setClickedTitle({ commit }, payload) {
+      commit("SET_CLICKEDTITLE", payload)
     }
   }
 });
