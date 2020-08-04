@@ -1,14 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import lodash from 'lodash'
 
+Vue.use(lodash)
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    totalResults: {
-      type: Number
-    },
+    totalResults: 0,
+    savedMoviesInfos: [],
     moviesInfos: [],
     searchedMovie: "",
     page: 1,
@@ -47,6 +48,10 @@ export default new Vuex.Store({
     },
     SET_MOVIESINFOS(state, payload) {
       state.moviesInfos = payload;
+      state.savedMoviesInfos = payload;
+      if(state.savedMoviesInfos)
+        state.moviesInfos = state.savedMoviesInfos
+        console.log(state.moviesInfos)
     },
     SET_CLICKEDMOVIEDETAILS(state, payload) {
       state.clickedMovieDetails = payload;
@@ -66,17 +71,25 @@ export default new Vuex.Store({
           commit("SET_TOTALRESULTS", response.data.totalResults);
           commit("SET_MOVIESINFOS", response.data.Search)
           for (let i = 0; i < response.data.Search.length; i++) {
-            if (response.data.Search[i].Poster == "N/A")
+            if (response.data.Search[i].Poster == "N/A") {
               response.data.Search[i].Poster = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.cdn4.stockunlimited.net%2Fpreview1300%2Fcinema-background-with-movie-objects_1823382.jpg&f=1&nofb=1"
+            }
           }
-        });
+
+        })
+        .catch(response => {
+          console.error(response.data)
+          state.totalResults = 0
+          state.page = null
+        })
     },
     fetch({ commit, state }) {
       axios
         .get("http://www.omdbapi.com/?t=" + state.clickedTitle + "&apikey=7dbc4f8c")
         .then(response => {
           commit("SET_CLICKEDMOVIEDETAILS", response.data)
-          console.log(state.clickedTitle, state.clickedMovieDetails)
+          if (state.clickedMovieDetails.Poster == "N/A")
+            state.clickedMovieDetails.Poster = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.cdn4.stockunlimited.net%2Fpreview1300%2Fcinema-background-with-movie-objects_1823382.jpg&f=1&nofb=1"
         })
     },
     changePage({ commit }, payload) {

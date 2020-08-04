@@ -4,7 +4,7 @@
       class="overflow-hidden text-center bg-gray-300 shadow-2xl text-black rounded-lg m-4 w-80"
       v-for="(movieInfo,index) in moviesInfos"
       :key="index"
-      @click="setClickedTitle(movieInfo.Title); fetch(); "
+      @click="setClickedTitle(movieInfo.Title); fetch(); goToDetails();"
     >
       <img class="w-full h-80" :src="movieInfo.Poster" alt />
       <div class="cardInfos py-3 px-3 shadow-2xl">
@@ -25,9 +25,13 @@ export default {
   methods: {
     fetch() {
       this.$store.dispatch("fetch");
+      console.log("Fetch:", this.$store.state.savedMoviesInfos);
     },
     setClickedTitle(payload) {
       this.$store.dispatch("setClickedTitle", payload);
+    },
+    goToDetails() {
+      this.$router.push("/details");
     }
   }
 };
