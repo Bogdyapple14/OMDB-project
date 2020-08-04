@@ -6,10 +6,12 @@
         src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fyesofcorsa.com%2Fwp-content%2Fuploads%2F2017%2F05%2FCinema-Wallpaper-Free.jpg&f=1&nofb=1"
         alt
       />
-      <router-link
-        to="/"
-        class="text-4xl text-gray-200 z-10 absolute top-0 mt-5 font-bold hover:text-red-300"
-      >Homepage</router-link>
+      <div>
+        <router-link
+          to="/"
+          class="text-4xl text-gray-200 z-10 absolute top-0 mt-5 font-bold hover:text-red-300"
+        >Homepage</router-link>
+      </div>
       <div
         id="newCard"
         class="flex absolute text-xl text-gray-200 font-semibold leading-loose bg-black bg-opacity-75 max-w-6xl text-left rounded-lg border-gray-400 border-2 flex-row-reverse"
@@ -67,7 +69,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters(["clickedMovieDetails"])
-  }
+  },
 };
 </script>
 

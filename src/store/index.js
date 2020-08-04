@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     totalResults: 0,
     savedMoviesInfos: [],
+    searched: false,
     moviesInfos: [],
     searchedMovie: "",
     page: 1,
@@ -19,6 +20,9 @@ export default new Vuex.Store({
   getters: {
     totalResults: state => {
       return state.totalResults;
+    },
+    searched: state => {
+      return state.searched;
     },
     clickedTitle: state => {
       return state.clickedTitle;
@@ -48,10 +52,9 @@ export default new Vuex.Store({
     },
     SET_MOVIESINFOS(state, payload) {
       state.moviesInfos = payload;
-      state.savedMoviesInfos = payload;
-      if(state.savedMoviesInfos)
-        state.moviesInfos = state.savedMoviesInfos
-        console.log(state.moviesInfos)
+    },
+    SET_SEARCHED(state) {
+      state.searched = true
     },
     SET_CLICKEDMOVIEDETAILS(state, payload) {
       state.clickedMovieDetails = payload;
@@ -70,6 +73,7 @@ export default new Vuex.Store({
         .then(response => {
           commit("SET_TOTALRESULTS", response.data.totalResults);
           commit("SET_MOVIESINFOS", response.data.Search)
+          commit("SET_SEARCHED")
           for (let i = 0; i < response.data.Search.length; i++) {
             if (response.data.Search[i].Poster == "N/A") {
               response.data.Search[i].Poster = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.cdn4.stockunlimited.net%2Fpreview1300%2Fcinema-background-with-movie-objects_1823382.jpg&f=1&nofb=1"

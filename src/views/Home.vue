@@ -37,17 +37,15 @@
 <script>
 import card from "../components/card";
 export default {
-  data() {
-    return {
-      searched: false
-    };
-  },
   computed: {
     totalResults() {
       return this.$store.getters.totalResults;
     },
     page() {
       return this.$store.getters.page;
+    },
+    searched() {
+      return this.$store.getters.searched;
     },
     searchedMovie: {
       get() {
@@ -61,7 +59,6 @@ export default {
   methods: {
     fetchApi() {
       this.$store.dispatch("fetchApi");
-      this.searched = true;
     },
     changePage(payload) {
       this.$store.dispatch("changePage", payload);

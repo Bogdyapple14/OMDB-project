@@ -25,7 +25,6 @@ export default {
   methods: {
     fetch() {
       this.$store.dispatch("fetch");
-      console.log("Fetch:", this.$store.state.savedMoviesInfos);
     },
     setClickedTitle(payload) {
       this.$store.dispatch("setClickedTitle", payload);
