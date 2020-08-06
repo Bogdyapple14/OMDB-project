@@ -2,14 +2,19 @@
   <div class="flex flex-wrap justify-center cards">
     <div
       class="overflow-hidden text-center bg-gray-300 shadow-2xl text-black rounded-lg m-4 w-80"
-      v-for="(movieInfo,index) in moviesInfos"
+      v-for="(movieInfo, index) in moviesInfos"
       :key="index"
-      @click="setClickedTitle(movieInfo.Title); fetch(); goToDetails();"
+      @click="
+        // Fetch individual movie api based on imdb id
+        fetchOnCard(movieInfo.imdbID);
+        // Change the route path to the movie details page
+        goToDetails(movieInfo.imdbID);
+      "
     >
       <img class="w-full h-80" :src="movieInfo.Poster" alt />
       <div class="cardInfos py-3 px-3 shadow-2xl">
-        <p class="movieTitle text-xl truncate">{{movieInfo.Title}}</p>
-        <p class="text-xl">Released: {{movieInfo.Year}}</p>
+        <p class="movieTitle text-xl truncate">{{ movieInfo.Title }}</p>
+        <p class="text-xl">Released: {{ movieInfo.Year }}</p>
       </div>
     </div>
   </div>
@@ -17,28 +22,20 @@
 
 <script>
 import { mapGetters } from "vuex";
-import tippy from "tippy.js";
 export default {
   computed: {
     ...mapGetters(["moviesTitles", "moviesInfos", "clickedMovieDetails"])
   },
   methods: {
-    fetch() {
-      this.$store.dispatch("fetch");
+    fetchOnCard(id) {
+      this.$store.dispatch("fetchOnCard", id);
     },
-    setClickedTitle(payload) {
-      this.$store.dispatch("setClickedTitle", payload);
-    },
-    goToDetails() {
-      this.$router.push("/details");
+    goToDetails(param) {
+      this.$router.push("/details/" + param);
     }
   }
 };
-tippy(".movieTitle", {
-  content: "My tooltip!"
-});
 </script>
-
 
 <style scoped>
 .cards {

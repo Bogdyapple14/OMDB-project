@@ -10,7 +10,8 @@
         <router-link
           to="/"
           class="text-4xl text-gray-200 z-10 absolute top-0 mt-5 font-bold hover:text-red-300"
-        >Homepage</router-link>
+          >Homepage</router-link
+        >
       </div>
       <div
         id="newCard"
@@ -18,45 +19,46 @@
       >
         <img class="w-1/2 object-cover" :src="clickedMovieDetails.Poster" alt />
         <div class="left px-4 py-2 my-auto">
-          <h3 class="text-center font-bold text-3xl">{{clickedMovieDetails.Title}}</h3>
+          <h3 class="text-center font-bold text-3xl">
+            {{ clickedMovieDetails.Title }}
+          </h3>
           <h3>
             <span class="font-bold text-red-200">Year</span>
-            : {{clickedMovieDetails.Year}}
+            : {{ clickedMovieDetails.Year }}
           </h3>
           <h3>
             <span class="font-bold text-red-200">Runtime</span>
-            : {{clickedMovieDetails.Runtime}}
+            : {{ clickedMovieDetails.Runtime }}
           </h3>
           <h3>
             <span class="font-bold text-red-200">Genre</span>
-            : {{clickedMovieDetails.Genre}}
+            : {{ clickedMovieDetails.Genre }}
           </h3>
           <h3>
             <span class="font-bold text-red-200">Actors</span>
-            : {{clickedMovieDetails.Actors}}
+            : {{ clickedMovieDetails.Actors }}
           </h3>
           <p>
             <span class="font-bold text-red-200">Plot</span>
-            : {{clickedMovieDetails.Plot}}
+            : {{ clickedMovieDetails.Plot }}
           </p>
           <h3>
             <span class="font-bold text-red-200">Production</span>
-            : {{clickedMovieDetails.Production}}
+            : {{ clickedMovieDetails.Production }}
           </h3>
           <h3>
             <span class="font-bold text-red-200">imdbRating</span>
-            : {{clickedMovieDetails.imdbRating}} / {{clickedMovieDetails.imdbVotes}}
-            <span
-              class="text-sm"
-            >votes</span>
+            : {{ clickedMovieDetails.imdbRating }} /
+            {{ clickedMovieDetails.imdbVotes }}
+            <span class="text-sm">votes</span>
           </h3>
           <h3>
             <span class="font-bold text-red-200">Box Office</span>
-            : {{clickedMovieDetails.BoxOffice}}
+            : {{ clickedMovieDetails.BoxOffice }}
           </h3>
           <h3>
             <span class="font-bold text-red-200">Country</span>
-            : {{clickedMovieDetails.Country}}
+            : {{ clickedMovieDetails.Country }}
           </h3>
         </div>
       </div>
@@ -70,8 +72,17 @@ export default {
   computed: {
     ...mapGetters(["clickedMovieDetails"])
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.fetchOnCard(to.params.id);
+    });
+  },
+  methods: {
+    fetchOnCard(id) {
+      this.$store.dispatch("fetchOnCard", id);
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

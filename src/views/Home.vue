@@ -12,21 +12,25 @@
       v-model="searchedMovie"
     />
     <div id="results" v-if="searched" class="flex text-center flex-col w-full">
-      <h1>Total Results: {{totalResults}}</h1>
+      <h1>Total Results: {{ totalResults }}</h1>
       <div id="pagination" class="flex mx-auto">
         <button
-          @click="changePage(-1)"
+          @click=" /* Decrease current page ( only if > 1 ) */ changePage(-1)"
           v-show="page > 1"
           class="hover:text-red-400 duration-200 focus:outline-none"
-        >Prev</button>
+        >
+          Prev
+        </button>
         <h1 class="mx-2">/</h1>
         <button
-          @click="changePage(1)"
+          @click="/* Increase current page ( only if < total results / page ) */  changePage(1)"
           v-show="page < totalResults / 10"
           class="hover:text-red-400 duration-200 focus:outline-none"
-        >Next</button>
+        >
+          Next
+        </button>
       </div>
-      <h1>{{page}}</h1>
+      <h1>{{ page }}</h1>
       <div class="flex flex-wrap justify-center items-center">
         <card></card>
       </div>
@@ -36,17 +40,10 @@
 
 <script>
 import card from "../components/card";
+import { mapGetters } from 'vuex';
 export default {
   computed: {
-    totalResults() {
-      return this.$store.getters.totalResults;
-    },
-    page() {
-      return this.$store.getters.page;
-    },
-    searched() {
-      return this.$store.getters.searched;
-    },
+    ...mapGetters(['totalResults' , 'page' , 'searched']),
     searchedMovie: {
       get() {
         return this.$store.getters.searchedMovie;

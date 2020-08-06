@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home";
-import Details from '../views/movieDetails'
+import Details from "../views/movieDetails";
 
 Vue.use(VueRouter);
 
@@ -12,7 +12,7 @@ const routes = [
     component: Home
   },
   {
-    path: "/details",
+    path: "/details/:id",
     name: "details",
     component: Details
   }

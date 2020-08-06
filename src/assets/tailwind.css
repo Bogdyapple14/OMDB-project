@@ -2,4 +2,10 @@
 
 @import "tailwindcss/components";
 
+.w-80{
+    width: 20rem
+}
+.h-80{
+    height: 20rem;
+}
 @import "tailwindcss/utilities";
