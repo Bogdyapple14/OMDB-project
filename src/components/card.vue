@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-wrap justify-center cards">
     <div
-      class="overflow-hidden text-center bg-gray-300 shadow-2xl text-black rounded-lg m-4 w-80"
+      id="card"
+      class="relative overflow-hidden text-center bg-gray-300 shadow-2xl text-black rounded-lg m-4 w-80"
       v-for="(movieInfo, index) in moviesInfos"
       :key="index"
       @click="
@@ -10,7 +11,7 @@
         // Change the route path to the movie details page
         goToDetails(movieInfo.imdbID);
       "
-    >
+      >
       <img class="w-full h-80" :src="movieInfo.Poster" alt />
       <div class="cardInfos py-3 px-3 shadow-2xl">
         <p class="movieTitle text-xl truncate">{{ movieInfo.Title }}</p>
@@ -32,7 +33,8 @@ export default {
     },
     goToDetails(param) {
       this.$router.push("/details/" + param);
-    }
+    },
+
   }
 };
 </script>
@@ -40,5 +42,12 @@ export default {
 <style scoped>
 .cards {
   min-height: 12rem !important;
+}
+button.absolute {
+  opacity: 0;
+  transition: 0.3s all;
+}
+#card:hover button.absolute {
+  opacity: 100%;
 }
 </style>

@@ -7,16 +7,19 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     totalResults: 0,
-    savedMoviesInfos: [],
     searched: false,
     moviesInfos: [],
     searchedMovie: "",
     page: 1,
-    clickedMovieDetails: []
+    clickedMovieDetails: [],
+    watchLater: []
   },
   getters: {
     totalResults: state => {
       return state.totalResults;
+    },
+    watchLater: state => {
+      return state.watchLater;
     },
     searched: state => {
       return state.searched;
@@ -38,6 +41,9 @@ export default new Vuex.Store({
     SET_TOTALRESULTS(state, payload) {
       state.totalResults = payload;
     },
+    SET_WATCHLATER(state, payload) {
+      state.watchLater.push(payload);
+    },
     CHANGE_PAGE(state, payload) {
       state.page += payload;
     },
@@ -52,7 +58,7 @@ export default new Vuex.Store({
     },
     SET_SEARCHEDMOVIE(state, payload) {
       state.searchedMovie = payload;
-    },
+    }
   },
   actions: {
     // Fetch all movies infos and arrange them into cards
@@ -60,9 +66,9 @@ export default new Vuex.Store({
       axios
         .get(
           "http://www.omdbapi.com/?s=" +
-          state.searchedMovie +
-          "&apikey=7dbc4f8c&type=movie&page=" +
-          state.page
+            state.searchedMovie +
+            "&apikey=7dbc4f8c&type=movie&page=" +
+            state.page
         )
         .then(response => {
           commit("SET_TOTALRESULTS", response.data.totalResults);
@@ -96,5 +102,9 @@ export default new Vuex.Store({
     changePage({ commit }, payload) {
       commit("CHANGE_PAGE", payload);
     },
+    watchLater({ commit, state }, title) {
+      commit("SET_WATCHLATER", state.clickedMovieDetails);
+      alert(title + " added to watch-list");
+    }
   }
 });
